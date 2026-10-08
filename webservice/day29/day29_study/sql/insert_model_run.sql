@@ -1,0 +1,9 @@
+INSERT INTO MODEL_RUNS(
+    MODEL_NAME,
+    DATASET_NAME,
+    ACCURACY,
+    EPOCHS,
+    MEMO
+)
+VALUES (%s, %s, %s, %s, %s)
+RETURNING ID;

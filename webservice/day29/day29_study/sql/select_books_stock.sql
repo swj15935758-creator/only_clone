@@ -1,0 +1,3 @@
+SELECT *
+FROM BOOKS
+WHERE STOCK >= %s;

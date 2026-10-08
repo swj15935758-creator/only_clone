@@ -1,0 +1,2 @@
+DELETE FROM JOBS
+WHERE ID = %s;

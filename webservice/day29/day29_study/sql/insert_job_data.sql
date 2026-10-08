@@ -1,0 +1,9 @@
+INSERT INTO JOBS(
+    COMPANY,
+    POSITION,
+    LOCATION,
+    SALARY,
+    STATUS
+)
+VALUES (%s, %s, %s, %s, %s)
+RETURNING ID;

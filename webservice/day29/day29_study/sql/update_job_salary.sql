@@ -1,0 +1,3 @@
+UPDATE JOBS
+SET SALARY = %s
+WHERE ID = %s;
