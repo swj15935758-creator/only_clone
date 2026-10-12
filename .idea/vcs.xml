@@ -4,5 +4,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/webservice/day31/exapp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/webservice/day31/myapp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/webservice/day32" vcs="Git" />
   </component>
 </project>
