@@ -30,7 +30,7 @@ DOCS = [
 # 텍스트 정규화 함수
 def normalize(text):
     # 한글, 영문대소문자, 숫자, 공백문자가 아닌것은 ' '로 변환
-    text = re.sub(r'[^가=힣A-Za-z0-9\s]',' ',text)
+    text = re.sub(r'[^가-힣A-Za-z0-9\s]',' ',text)
     # 공백문자가 1개 이상이면 ' '로 변한 후 앞뒤공백 제거 후 소문자로 변환 후 리턴
     return re.sub(r'\s+',' ',text).strip().lower()
 
@@ -130,6 +130,6 @@ def inspect_audio():
     plt.show()
 
 if __name__ == '__main__':
-    cleaned_docs = inspect_document(DOCS)
+    cleaned_docs = normalize(DOCS)
     inspect_vectors(cleaned_docs)
     inspect_audio()
