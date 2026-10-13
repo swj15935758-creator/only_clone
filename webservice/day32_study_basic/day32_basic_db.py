@@ -38,23 +38,3 @@ def save_run(label, result):
 
 def list_runs(keyword = ''):
     return execute('list.sql',(f'%{keyword.strip()}%',))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

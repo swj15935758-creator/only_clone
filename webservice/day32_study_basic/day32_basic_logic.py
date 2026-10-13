@@ -20,4 +20,3 @@ def calculate_shipping_quotes(weight):
         'fee': fee,
         'rule_version': RULE_VERSION
     }
-
