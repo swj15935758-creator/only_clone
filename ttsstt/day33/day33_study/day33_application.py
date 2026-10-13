@@ -102,3 +102,4 @@ if __name__ == '__main__':
     job_vec, matrix = vectorize_text(job_texts)
     scores = cosine_same_rate(job_vec,matrix,'python 모델 api')
     sorted_scores = print_name_scores(job_titles,scores)
+    print_best_job(sorted_scores)
