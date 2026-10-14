@@ -77,7 +77,7 @@ def print_name_scores(job_titles, scores):
     return sorted_scores
 # 4) 미등록 단어만 있는 질의는 점수 0으로 처리됨을 확인하세요.
 def check_unknown_txt(job_vec, matrix):
-    unknown_txt = '요리 여행 음악'
+    unknown_txt = '집에 가고 싶어 시발'
 
     unknown_scores = cosine_same_rate(
         job_vec,
@@ -102,4 +102,5 @@ if __name__ == '__main__':
     job_vec, matrix = vectorize_text(job_texts)
     scores = cosine_same_rate(job_vec,matrix,'python 모델 api')
     sorted_scores = print_name_scores(job_titles,scores)
+    check_unknown_txt(job_vec, matrix)
     print_best_job(sorted_scores)
