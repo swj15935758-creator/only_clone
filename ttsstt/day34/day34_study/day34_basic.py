@@ -56,7 +56,6 @@ def load_y_sr(path):
     y, sr = librosa.load(path, sr=None, mono=False)
     return y, sr
 
-
 # 파일명, 길이(초), 샘플링레이트, 채널 수를 조사하세요.
 def inspect(name, y, sr):
 
@@ -69,7 +68,6 @@ def inspect(name, y, sr):
         'sr': sr,
         'channels': 1 if y.ndim == 1 else y.shape[0] # 채널 수
     }
-
 
 # 피크 진폭(peak)과 RMS 음량 지표를 구하세요.
 def peak_rms(y):
