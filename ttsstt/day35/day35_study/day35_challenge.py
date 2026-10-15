@@ -1,4 +1,3 @@
-
 # day35_challenge.py
 # 주제:[Challenge: 철도역 음성 안내 신뢰성 리포트]
 import csv
@@ -112,7 +111,6 @@ def find_keywords(SAMPLES):
 # 4. 위험 키워드 누락 건에 대해 자동 배포 금지(검토 필요) 판정을 내리세요.
 def check_warning(results, rtf, missing_results):
     for index in range(len(results)):
-        results[index]['sample'] = index + 1
         results[index]['rtf'] = rtf[index]
         results[index]['missing_keywords'] = ', '.join(missing_results[index])
 
@@ -171,6 +169,7 @@ def main():
     pp(summary_df)
 
     save_df(df, summary_df)
+
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
-﻿wer,cer,S,D,I,reference_norm,hypothesis_norm,sample,rtf,missing_keywords,wer_warning,cer_warning,rtf_warning,auto_block,decision
-0.0,0.0,0,0,0,열차 출발 시간은 오전 열 시입니다,열차 출발 시간은 오전 열 시입니다,1,0.35000000000000003,,False,False,False,False,설정 기준 통과
-0.3333333333333333,0.19047619047619047,1,1,0,다음 열차는 삼 번 승강장에 도착합니다,다음 열차는 삼 번에 도착합니다,2,0.34285714285714286,승강장,True,True,False,True,자동 배포 금지(검토 필요)
-0.5,0.29411764705882354,1,1,0,열차 출발 장소가 변경되었습니다,열차 장소가 되었습니다,3,0.48333333333333334,"출발, 변경",True,True,False,True,자동 배포 금지(검토 필요)
-0.0,0.0,0,0,0,안전선 안쪽에서 기다려 주세요,안전선 안쪽에서 기다려 주세요,4,0.3,,False,False,False,False,설정 기준 통과
+﻿wer,cer,S,D,I,reference_norm,hypothesis_norm,rtf,missing_keywords,wer_warning,cer_warning,rtf_warning,auto_block,decision
+0.0,0.0,0,0,0,열차 출발 시간은 오전 열 시입니다,열차 출발 시간은 오전 열 시입니다,0.35000000000000003,,False,False,False,False,설정 기준 통과
+0.3333333333333333,0.19047619047619047,1,1,0,다음 열차는 삼 번 승강장에 도착합니다,다음 열차는 삼 번에 도착합니다,0.34285714285714286,승강장,True,True,False,True,자동 배포 금지(검토 필요)
+0.5,0.29411764705882354,1,1,0,열차 출발 장소가 변경되었습니다,열차 장소가 되었습니다,0.48333333333333334,"출발, 변경",True,True,False,True,자동 배포 금지(검토 필요)
+0.0,0.0,0,0,0,안전선 안쪽에서 기다려 주세요,안전선 안쪽에서 기다려 주세요,0.3,,False,False,False,False,설정 기준 통과
