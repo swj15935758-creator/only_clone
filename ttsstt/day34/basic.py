@@ -1,121 +1,86 @@
 # day34_basic.py
-# 주제:
-# day34_application.py
-# 주제:
-# Basic: 실제 매장·시장 현장음 품질 점검
-# 업무 상황
-# 서로 다른 장소에서 녹음된 현장음을 전달받았습니다.
-# 파일별 음량과 녹음 조건을 비교하여 검토 대상 파일을 추려야 합니다.
-#
-# 실제 데이터
-# store_audio/store_A.wav: 실제 시장 현장 녹음(12초)
-# store_audio/store_B.wav: 실제 슈퍼마켓 계산대 녹음(13초)
-# store_audio/store_C.wav: 실제 시장 현장 녹음의 다른 구간(15초)
-#
-# 요구사항
-# 정확히 위 WAV 3개를 읽으세요. 없으면 누락 파일을 안내하세요.
-# 파일명, 길이(초), 샘플링레이트, 채널 수를 조사하세요.
-# 피크 진폭(peak)과 RMS 음량 지표를 구하세요.
-# 피크 0.03 미만은 recheck, 나머지는 ok로 분류하세요.(0.03은 연습용 임계값이므로 실제 방송 적합성 판정은 아닙니다.)
-# store_audio_check.csv로 결과를 저장하세요.
-# 원본 WAV는 수정하지 마세요.
-#
-# 결과물
-# store_audio_check.csv: 파일별 길이·샘플링레이트·채널·피크·RMS·상태
-# 콘솔에 파일별 검사 결과 출력
 
 import csv
-from csv import DictWriter
 from pathlib import Path
 import numpy as np
-import librosa
 import soundfile as sf
-import matplotlib.pyplot as plt
 from util.print_util import pp, up
 
 ROOT = Path(__file__).resolve().parent
+INPUT = ROOT / "store_audio"
+FILES = ('store_A.wav', 'store_B.wav', 'store_C.wav')
+REPORT = ROOT / "store_audio_check.csv"
 
-SOURCES = {
-    'store_audio' : ('store_A.wav', 'store_B.wav', 'store_C.wav')
-}
+LOW_PEAK = 0.03 # 실습용 로우 피크
 
-REPORT = ROOT /  'reports'
+# 녹음 파일을 읽어서 길이, 채널, 피크, RMS를 반환하는 함수
+def inspect_audio(path):
 
+    # always_2d=True: 모노도 (샘플 수, 1채널) 형태로 반환
+    audio, sr = sf.read(path, dtype='float32', always_2d=True)
 
-# 정확히 위 WAV 3개를 읽으세요. 없으면 누락 파일을 안내하세요.
-def find_wav():
-    missing = []
-    found = []
+    if audio.size == 0 or not np.isfinite(audio).all():
+        raise ValueError("빈 파일이거나 유효하지 않은 샘플이 있습니다")
 
-    for folder, names in SOURCES.items():
-        for name in names:
-            path = ROOT / folder / name
-            if path.is_file():
-                found.append((folder,path))
-            else:
-                missing.append(f'{folder}/{name}')
-    if missing:
-        pp('실제 녹음 파일이 준비되지 않았습니다.')
-        for name in missing:
-            pp('누락된 파일: ', name)
-        return []
+    peak = float(np.max(np.abs(audio))) # 절대 진폭값 중 가장 큰 값
 
-    return found
-# 파일명, 길이(초), 샘플링레이트, 채널 수를 조사하세요.
-# 피크 0.03 미만은 recheck, 나머지는 ok로 분류하세요.(0.03은 연습용 임계값이므로 실제 방송 적합성 판정은 아닙니다.)
+    rms = float(np.sqrt(np.mean(audio ** 2))) # 전체 평균 음량 지표
 
-def inspect(y, sr, path):
-    if y.size == 0 or sr <= 0 or not np.isfinite(y).all():
-        raise ValueError('비어 있거나 유효하지 않은 음성 데이터입니다.')
-
-    # RMS와 Peak 계산을 위해 모노로 변환 (원본 y는 수정하지 않음)
-    mono = librosa.to_mono(y) if y.ndim == 2 else y
-
-    peak = float(np.max(np.abs(mono)))
-    rms = float(np.sqrt(np.mean(mono ** 2)))
+    status = 'recheck' if peak < LOW_PEAK else "ok"
 
     return {
         'filename': path.name,
-        'duration': round(librosa.get_duration(y=y, sr=sr), 3),
+        'duration_sec': round(len(audio)/sr, 2),
         'sample_rate': sr,
-        'channels': 1 if y.ndim == 1 else y.shape[0],
+        'channels': audio.shape[1],
         'peak': round(peak, 5),
         'rms': round(rms, 5),
-        'status': 'recheck' if peak < 0.03 else 'ok'
+        'status': status
     }
 
-
 def main():
-    found = find_wav()
-    if not found:
+
+    missing = [name for name in FILES if not (INPUT / name).is_file()]
+
+    if missing:
+        pp('실제 녹음 파일이 없습니다')
+        pp('누락: ', ', '.join(missing))
         return
 
-    REPORT.mkdir(exist_ok=True)
-
-    fields = ['filename', 'duration', 'sample_rate', 'channels', 'peak', 'rms', 'status']
-    report = REPORT / 'store_audio_check.csv'
-
     rows = []
-    for group, path in found:
-        # 원본 WAV 파일 읽기 (원본은 수정하지 않음)
-        y, sr = librosa.load(path, sr=None, mono=False)
 
-        # 파일 조사 및 지표 계산
-        row = inspect(y, sr, path)
-        rows.append(row)
+    for name in FILES:
+        path = INPUT / name
+        try:
+            rows.append(inspect_audio(path))
+        except (OSError, RuntimeError, ValueError) as e:
+            rows.append({
+                'filename': name,
+                'duration_sec': '',
+                'sample_rate': '',
+                'channels': '',
+                'peak': '',
+                'rms': '',
+                'status': f'error: {e}'
+            })
 
-        # 콘솔에 파일별 검사 결과 출력
-        pp(row['filename'], row['status'], f"Peak: {row['peak']}", f"RMS: {row['rms']}")
+    fields = ['filename', 'duration_sec', 'sample_rate', 'channels', 'peak', 'rms', 'status']
 
-    # CSV 파일 저장
-    with report.open('w', encoding='utf-8-sig', newline='') as f:
-        writer = DictWriter(f, fieldnames=fields)
+    with REPORT.open('w', newline='', encoding='utf-8-sig') as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
 
-    pp(f'CSV 보고서 저장 완료: {report}')
+    pp('실제 현장 녹음 품질 점검')
+    for row in rows:
+        pp(row)
+
+    pp(f'보고서 저장: {REPORT}')
+
 if __name__ == '__main__':
     main()
-# store_audio_check.csv로 결과를 저장하세요.
-# 원본 WAV는 수정하지 마세요.
+
+up(5)
+
+
 

@@ -1,0 +1,2 @@
+﻿total_samples,wer_mean,cer_mean,rtf_mean,wer_warning_count,cer_warning_count,rtf_warning_count,auto_block_count
+4,0.20833333333333331,0.1211484593837535,0.36904761904761907,2,2,0,2
