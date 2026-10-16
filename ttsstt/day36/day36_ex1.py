@@ -22,9 +22,9 @@ ALT_VOICE = 'ko-KR-InJoonNeural'
 
 # TTS 에 사용할 문장들
 SAMPLES = [
-    '안녕하세요. 접니다. 저라구요.',
-    '오늘의 분석 결과는 나야 들기들',
-    '잠시 후 다시 돌아오겠습니다.'
+    '초인적인 신체 능력을 가졌다. 내가 가능한 건 맨손으로 720kg이 넘는 북극곰이나 거대 돌연변이 코끼리를 때려잡고, 지진을 주먹 한 방으로 멈췄다는 전설이 있습니다. 낙하 40층 높이에서 떨어지거나 번개를 맞아도 생존하지',
+    '미국 정부와 싸워 이긴 인물이다. 내 근육을 봐라 내등의 근육은 타격을 위한 악마의 형상이 있지 크하하하하하',
+    '내이름은 아이젠 소스케 내가 하늘에 서겠다. "스며드는(베어나오는) 혼탁의 문장 불손한 광기의 그릇 솟아오르며 부정하고 마비되며 깜빡대어 잠을 해방하노라 파행하는 철의 왕녀 끊임없이 자멸하는 진흙 인형 결합하라! 반발하라! 땅을 메워 자신의 무력함을 알라 파도 90 흑관!!!'
 ]
 
 # 문장을 지정한 음색/ 속도 / 피치로 MP3에 저장하는 함수 synthesize 합성이라는뜻
@@ -89,7 +89,7 @@ async def main():
         except Exception as e:
             pp(f'실패:{filename}:{type(e).__name__}:{e}')
 
-    # 빈 설문 CSV : 평가자가 실제 음성을 듣고 점수를 깅비함
+    # 빈 설문 CSV : 평가자가 실제 음성을 듣고 점수를 비교함
     with (OUT/'listening_scores.csv').open('w', newline='',encoding='utf-8-sig') as f:
         writer = csv.writer(f)
         writer.writerow(['clip_id','evaluator','clarity','naturalness','comment'])
