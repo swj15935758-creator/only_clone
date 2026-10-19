@@ -37,6 +37,7 @@ async def synthesize(text,filename,voice=VOICE,rate='+0%',pitch='+0Hz'):
     elapsed = end - start
 
     audio = AudioFile(str(target)) # 메타데이터 조회
+    # info = AudioFile(str(path)).info 이렇게도 가능 info 가져올떄
 
     # 오디오x or info 속성 x
     if audio is None or not hasattr(audio,'info'):
