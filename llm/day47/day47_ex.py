@@ -62,7 +62,7 @@ def heading(title):
 # 다음 토큰 후보 확률과 Greedy 선택, 조건부 확률을 확인하는 함수
 def example_probability():
     heading('다음토큰 후보확률과 Greedy 선택, 조건부 확률 확인')
-    candidates = {'종다': 0.6, '춥다':0.3, '맑다':0.1} # 후보 확률 딕셔너리
+    candidates = {'좋다': 0.6, '춥다':0.3, '맑다':0.1} # 후보 확률 딕셔너리
     pp('입력 문맥:','오늘 날씨가')
     pp('다음 토큰 후보 확률:',candidates)
     pp('전체 확률의 합:', sum(candidates.values()))
@@ -225,10 +225,12 @@ def example_pipline():
     pp('암배딩 Shape:',embeddings.shape)
     pp('첫번째 토큰의 임베딩:', np.round(embeddings[0], 2))
     pp('위치번호:'), positions
+
     # Softmax 결과가 0.6, 0.3, 0.1이 되도록 가상 Logits를 역으로 구성
     logits = np.log(np.array([0.6,0.3,0.1]))
     pp('가상 Logits', np.round(logits, 3))
     pp('Softmax 확률:', np.round(softmax(logits), 3))
+
     # np.argmax를 사용해 가장 높은 점수의 위치를 찾아 후보 토큰 선택
     pp('최대 확률 토큰', ['학습','개발','활용'][np.argmax(logits)])
     pp('다음 토큰 선택 후에는 그 토큰을 문맥에 추가하고 과정을 계속 반복')
