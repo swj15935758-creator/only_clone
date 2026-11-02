@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-SUBJECT_NAME = 'ttsstt'  # 과정명
+SUBJECT_NAME = 'llm'  # 과정명
 
 
 # 폴더 생성 함수
