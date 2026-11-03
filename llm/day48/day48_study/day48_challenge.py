@@ -71,9 +71,7 @@ def generate_text(tokenizer, model, device, prompts, params, seed=SEED):
 
     new_ids = output[0, input_len:]
     pp(f'생성 토큰 ID:{new_ids.tolist()}')
-    pp('원본 출력', repr(
-        tokenizer.decode(new_ids, skip_special_tokens=False)
-    ))
+    pp('원본 출력', repr(tokenizer.decode(new_ids, skip_special_tokens=False)))
 
     # 토큰 ID를 문자열로 디코딩
     answer = tokenizer.decode(new_ids, skip_special_tokens=True)
@@ -90,13 +88,8 @@ def run_case(state, name, request, params):
     tokenizer, model, device = ensure_model(state)
     options = {'max_new_tokens': MAX_NEW_TOKENS, **params}
 
-    generation_prompt = (
-        "Write a polite, concise customer support reply in English "
-        "to this customer message:\n"
-        f"{request}"
-    )
     result = generate_text(
-        tokenizer, model, device, generation_prompt, options
+        tokenizer, model, device, request, options
     )
 
     words = result['answer'].split()
