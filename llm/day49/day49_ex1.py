@@ -66,8 +66,6 @@ role/content 메세지를 모델 전용 문자열 형식으로 변환한 포멧
 
 import json
 from pathlib import Path
-
-from ttsstt.day37.pratice강사님 import answer_question
 from util.print_util import pp
 
 ROOT = Path(__file__).resolve().parent
