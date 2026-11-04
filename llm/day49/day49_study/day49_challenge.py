@@ -2,6 +2,16 @@
 # 주제:여행 일정 상담 맥락 메모
 # 목표: 여행 일정 서비스에 요약 메모 + 최근 2턴 정책을 구현합니다.
 
+# 요구사항
+#1. 4턴짜리 여행 일정 상담 대화를 구성합니다.
+#2. 예산/여행 도시/이동수단을 facts 딕셔너리에 저장합니다.
+#3. system에 사실 메모를 직렬화한 별도 메시지를 추가하지 말고,
+#   system 본문에 "확인된 정보:" 형식으로 결합합니다.
+#4. 최근 2턴만 보존해도 처음 확정된 예산이 남도록 구현합니다.
+#5. 개인정보를 넣지 않고 JSON으로 결과를 저장합니다.
+#6. 문맥 보존 성공 여부를 assert로 자동 검증합니다.
+
+
 import json
 from pathlib import Path
 from util.print_util import pp
@@ -80,8 +90,8 @@ def main():
     fact_text = ', '.join(
         f'{key}: {value}' for key, value in facts.items()
     )
-    result[0]['content'] += '\n확인된 정보: ' + fact_text
-    # pp(result) # 확인용
+    result[0]['content'] += '확인된 정보: ' + fact_text
+    pp(result) # 확인용
     recent = keep_recent_turns(result, max_turns=2)
 
     assert len(pairs) == MAX_TURNS
