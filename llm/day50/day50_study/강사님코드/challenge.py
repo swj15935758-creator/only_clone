@@ -142,7 +142,8 @@ def main():
     }
 
     (report_dir / 'challenge_security_report.json').write_text(
-        json.dumps(report, ensure_ascii=False, indent=2) + '\n'
+        json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+        encoding='utf-8'
     )
 
     pp('정상: ', len(rows), ', 제외: ', len(rejected))
