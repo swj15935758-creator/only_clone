@@ -19,6 +19,7 @@
 - ollama list : 설치된 모델 목록 확인
 - ollama run gemma3:1b: 모델 실행 및 대화 테스트(파이썬 실행시는 생략)
 [종료]
+- /bye ;
 - ollama stop gemma3:1b
 [실행중 확인]
 - ollama ps
