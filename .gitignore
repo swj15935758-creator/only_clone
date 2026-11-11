@@ -1,6 +1,6 @@
 .venv*/
 .env
-.json
-.jsonl\
-.csv
-.xlsx
+*.json
+*.jsonl
+*.csv
+*.xlsx
