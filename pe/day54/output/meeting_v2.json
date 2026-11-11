@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "mission": "meeting",
+    "version": "v2",
+    "model": "gpt-4.1-mini",
+    "created_utc": "2026-11-11T03:44:12.360134+00:00",
+    "score": 33.33,
+    "errors": "OK",
+    "seconds": 1.7,
+    "input_tokens": 208,
+    "output_tokens": 136,
+    "response_text": "{\n  \"decisions\": [\n    \"신규 안내 페이지는 다음 주 금요일 공개로 결정\",\n    \"김대리는 문구 검수를 맡기로 결정\"\n  ],\n  \"tasks\": [\n    {\n      \"owner\": \"김대리\",\n      \"task\": \"신규 안내 페이지 문구 검수\",\n      \"due\": \"미정\"\n    },\n    {\n      \"owner\": \"박주임\",\n      \"task\": \"통계 페이지 오류 확인\",\n      \"due\": \"다음 주 수요일\"\n    }\n  ],\n  \"risks\": [\n    \"오류 복구 기한이 미정\"\n  ]\n}"
+  },
+  "parsed": {
+    "decisions": [
+      "신규 안내 페이지는 다음 주 금요일 공개로 결정",
+      "김대리는 문구 검수를 맡기로 결정"
+    ],
+    "tasks": [
+      {
+        "owner": "김대리",
+        "task": "신규 안내 페이지 문구 검수",
+        "due": "미정"
+      },
+      {
+        "owner": "박주임",
+        "task": "통계 페이지 오류 확인",
+        "due": "다음 주 수요일"
+      }
+    ],
+    "risks": [
+      "오류 복구 기한이 미정"
+    ]
+  },
+  "reference": null
+}

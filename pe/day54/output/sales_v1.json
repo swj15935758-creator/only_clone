@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "mission": "sales",
+    "version": "v1",
+    "model": "gpt-4.1-mini",
+    "created_utc": "2026-11-11T03:45:37.339301+00:00",
+    "score": -25.0,
+    "errors": "MISSING:best_month;MISSING:worst_month",
+    "seconds": 6.88,
+    "input_tokens": 302,
+    "output_tokens": 603,
+    "response_text": "{\n  \"year\": 2026,\n  \"total_revenue\": 185900000,\n  \"total_orders\": 3664,\n  \"average_monthly_revenue\": 15491666.67,\n  \"average_monthly_orders\": 305.33,\n  \"monthly_data\": [\n    {\"month\": \"2026-01\", \"revenue\": 12000000, \"orders\": 214, \"average_order_value\": 56074.77},\n    {\"month\": \"2026-02\", \"revenue\": 13200000, \"orders\": 236, \"average_order_value\": 55932.20},\n    {\"month\": \"2026-03\", \"revenue\": 12800000, \"orders\": 229, \"average_order_value\": 55982.53},\n    {\"month\": \"2026-04\", \"revenue\": 15400000, \"orders\": 275, \"average_order_value\": 56000.00},\n    {\"month\": \"2026-05\", \"revenue\": 16100000, \"orders\": 288, \"average_order_value\": 55903.47},\n    {\"month\": \"2026-06\", \"revenue\": 14900000, \"orders\": 266, \"average_order_value\": 56015.04},\n    {\"month\": \"2026-07\", \"revenue\": 17300000, \"orders\": 309, \"average_order_value\": 55954.69},\n    {\"month\": \"2026-08\", \"revenue\": 18800000, \"orders\": 336, \"average_order_value\": 55952.38},\n    {\"month\": \"2026-09\", \"revenue\": 18100000, \"orders\": 323, \"average_order_value\": 56037.15},\n    {\"month\": \"2026-10\", \"revenue\": 20500000, \"orders\": 366, \"average_order_value\": 56010.93},\n    {\"month\": \"2026-11\", \"revenue\": 22400000, \"orders\": 400, \"average_order_value\": 56000.00},\n    {\"month\": \"2026-12\", \"revenue\": 23900000, \"orders\": 427, \"average_order_value\": 55948.95}\n  ],\n  \"insights\": {\n    \"highest_revenue_month\": \"2026-12\",\n    \"highest_orders_month\": \"2026-12\",\n    \"lowest_revenue_month\": \"2026-01\",\n    \"lowest_orders_month\": \"2026-01\",\n    \"revenue_trend\": \"상승 추세\",\n    \"order_trend\": \"상승 추세\",\n    \"average_order_value_stability\": \"평균 주문 금액이 월별로 거의 일정함\"\n  }\n}"
+  },
+  "parsed": {
+    "year": 2026,
+    "total_revenue": 185900000,
+    "total_orders": 3664,
+    "average_monthly_revenue": 15491666.67,
+    "average_monthly_orders": 305.33,
+    "monthly_data": [
+      {
+        "month": "2026-01",
+        "revenue": 12000000,
+        "orders": 214,
+        "average_order_value": 56074.77
+      },
+      {
+        "month": "2026-02",
+        "revenue": 13200000,
+        "orders": 236,
+        "average_order_value": 55932.2
+      },
+      {
+        "month": "2026-03",
+        "revenue": 12800000,
+        "orders": 229,
+        "average_order_value": 55982.53
+      },
+      {
+        "month": "2026-04",
+        "revenue": 15400000,
+        "orders": 275,
+        "average_order_value": 56000.0
+      },
+      {
+        "month": "2026-05",
+        "revenue": 16100000,
+        "orders": 288,
+        "average_order_value": 55903.47
+      },
+      {
+        "month": "2026-06",
+        "revenue": 14900000,
+        "orders": 266,
+        "average_order_value": 56015.04
+      },
+      {
+        "month": "2026-07",
+        "revenue": 17300000,
+        "orders": 309,
+        "average_order_value": 55954.69
+      },
+      {
+        "month": "2026-08",
+        "revenue": 18800000,
+        "orders": 336,
+        "average_order_value": 55952.38
+      },
+      {
+        "month": "2026-09",
+        "revenue": 18100000,
+        "orders": 323,
+        "average_order_value": 56037.15
+      },
+      {
+        "month": "2026-10",
+        "revenue": 20500000,
+        "orders": 366,
+        "average_order_value": 56010.93
+      },
+      {
+        "month": "2026-11",
+        "revenue": 22400000,
+        "orders": 400,
+        "average_order_value": 56000.0
+      },
+      {
+        "month": "2026-12",
+        "revenue": 23900000,
+        "orders": 427,
+        "average_order_value": 55948.95
+      }
+    ],
+    "insights": {
+      "highest_revenue_month": "2026-12",
+      "highest_orders_month": "2026-12",
+      "lowest_revenue_month": "2026-01",
+      "lowest_orders_month": "2026-01",
+      "revenue_trend": "상승 추세",
+      "order_trend": "상승 추세",
+      "average_order_value_stability": "평균 주문 금액이 월별로 거의 일정함"
+    }
+  },
+  "reference": {
+    "total_revenue": 205400000,
+    "best_month": "2026-12",
+    "worst_month": "2026-01"
+  }
+}
