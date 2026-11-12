@@ -41,10 +41,6 @@ class CancellationOut(BaseModel):
 # 순서대로 2석 예약→초과 예약→취소→재예약을 직접 검증합니다.
 
 
-
-
-
-
 remaining_seats = {
     event_id: event['capacity'] for event_id, event in EVENTS.items()
 }

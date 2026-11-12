@@ -27,8 +27,7 @@ next_post_id = 1
 @app.post('/posts', response_model=JobOut, status_code=status.HTTP_201_CREATED)
 def create_job(job: JobPost):
     global next_post_id
-
-    payload = job.model_dump()
+    payload = job.model_dump() # pydantic 모델 객체를 json딕셔너리로
     payload['id'] = next_post_id
     posts[next_post_id] = payload
     next_post_id += 1

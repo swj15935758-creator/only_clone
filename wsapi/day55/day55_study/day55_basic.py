@@ -28,7 +28,7 @@ next_loan_id = 1
 @app.post('/loans', response_model=BookLoanOut, status_code=status.HTTP_201_CREATED)
 def create_book_loan(book_loan: BookLoan):
     global next_loan_id
-    new_loan = book_loan.model_dump()
+    new_loan = book_loan.model_dump() # 파이썬 객체 > 딕셔너리 / 딕셔너리 형태로 저장
     new_loan['id'] = next_loan_id
     loans[next_loan_id] = new_loan
     next_loan_id += 1
