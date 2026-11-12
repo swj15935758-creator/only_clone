@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-SUBJECT_NAME = 'pe'  # 과정명
+SUBJECT_NAME = ('wsapi')  # 과정명
 
 
 # 폴더 생성 함수
