@@ -146,8 +146,9 @@ def call_llm(client, model, instructions, user_input):
         model=model,
         instructions=instructions,
         input=user_input,
-        max_output_tokens=1600, # 출력 토큰 상한
-        store=False # 응답을 서버에 저장하지 않음
+        max_output_tokens=1600,
+        store=False,
+        text={"format": {"type": "json_object"}}
     )
     elapsed = round(time.perf_counter() - started, 2) # 소요 시간
     # response 객체의 usage 속성이 있으면 값을 획득, 없으면 None 획득
