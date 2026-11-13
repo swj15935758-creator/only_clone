@@ -93,9 +93,9 @@ def get_rates(base: str):
 
 @rate_router.get('/convert')
 def convert_currency(
-    base: str,
-    quote: str,
-    amount: float = Query(..., gt=0)
+    base: str = Query(default='USD'),
+    quote: str = Query(default='KRW'),
+    amount: float = Query(10, gt=0)
 ):
     base = normalize_currency(base)
     quote = normalize_currency(quote)
