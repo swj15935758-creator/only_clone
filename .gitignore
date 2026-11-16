@@ -4,3 +4,13 @@
 *.jsonl
 *.csv
 *.xlsx
+__pycache__/
+*.pyc
+.pytest_cache/
+.idea/
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.log
+output/
+outputs/
