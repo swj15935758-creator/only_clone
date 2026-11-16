@@ -4,7 +4,7 @@ import os
 
 import requests
 from dotenv import load_dotenv
-
+from util.print_util import pp
 load_dotenv()
 
 URL = 'http://127.0.0.1:8003/trip/recommend'
@@ -24,20 +24,20 @@ def main():
         response.raise_for_status()
         result = response.json()
     except requests.Timeout:
-        print('요청 시간 초과')
+        pp('요청 시간 초과')
         return
     except requests.HTTPError as error:
-        print('HTTP 오류:', error.response.status_code)
+        pp('HTTP 오류:', error.response.status_code)
         return
     except requests.exceptions.JSONDecodeError:
-        print('서버 응답이 JSON 형식이 아닙니다.')
+        pp('서버 응답이 JSON 형식이 아닙니다.')
         return
     except requests.RequestException:
-        print('서버 연결 또는 요청 오류')
+        pp('서버 연결 또는 요청 오류')
         return
 
     for item in result['recommendations']:
-        print(f"{item['day']}일차: {item['place']} ({item['interest']})")
+        pp(f"{item['day']}일차: {item['place']} ({item['interest']})")
 
 
 if __name__ == '__main__':
