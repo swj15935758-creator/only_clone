@@ -97,7 +97,7 @@ BASE = 'https://api.perso.ai'  # Perso API 서버
 MEDIA = 'https://portal-media.perso.ai'  # 결과 파일 서버
 PREFIX = '/video-translator/api/v1'
 KEY = os.getenv('PERSO_API_KEY', '').strip()
-SPACE_SEQ = 634056,  # 기본 작업 공간: 실제 조회한 Space로 변경 가능
+SPACE_SEQ = 634056  # 기본 작업 공간: 실제 조회한 Space로 변경 가능
 MAX_UPLOAD = 25 * 1024 * 1024  # 교육용 업로드 제한: 25MB
 app = FastAPI(title='Perso API 통합 실습', version='0.0.2')
 
@@ -246,13 +246,31 @@ async def read_upload(file: UploadFile) -> bytes:
 
 # 외부 URL 요청(SSRF) 방지: 공식 SAS 호스트 또는 Azure Blob 호스트만 허용
 # 유효한 서명 Query가 있어야 업로드 진행
+# Perso에서 발급한 SAS URL의 안전성을 검사하는 함수
 def check_sas_url(sas_url: str) -> None:
+    # SAS URL을 구성 요소별로 분리
     parsed = urlsplit(sas_url)
+    # URL의 호스트 이름 추출
     host = (parsed.hostname or '').lower()
-    allowed = (host == 'perso-saas-file-frontdoor.perso.ai'
-               or host.endswith('.blob.core.windows.net'))
-    if parsed.scheme != 'https' or not allowed or not parsed.query:
-        raise HTTPException(502, '허용되지 않은 SAS URL입니다')
+    # 실제 Perso API에서 확인된 호스트를 허용 목록에 추가
+    allowed = (
+        host == 'perso-studio-file.perso.ai'
+        or host == 'perso-saas-file-frontdoor.perso.ai'
+        or host.endswith('.blob.core.windows.net')
+    )
+    # HTTPS가 아니면 업로드 차단
+    if parsed.scheme != 'https':
+        raise HTTPException(502, 'SAS URL은 HTTPS여야 합니다')
+    # 허용된 호스트가 아니면 업로드 차단
+    if not allowed:
+        raise HTTPException(
+            502,
+            f'허용되지 않은 SAS 호스트: {host}'
+        )
+    # SAS 서명 Query가 없으면 업로드 차단
+    if not parsed.query:
+        raise HTTPException(502, 'SAS 서명 Query가 없습니다')
+    # URL에 사용자 이름, 암호, 별도 포트가 있으면 차단
     if parsed.username or parsed.password or parsed.port:
         raise HTTPException(502, 'SAS URL 호스트 정보가 잘못되었습니다')
 
@@ -350,26 +368,31 @@ async def queue(space_seq: int = Query(SPACE_SEQ, gt=0)):
                       f'{PREFIX}/projects/spaces/{space_seq}/queue')
 
 # 라우터: POST /perso/media/validate - 업로드 전 메타 데이터만 검사
-@app.post('/perso/media/valicate')
+@app.post('/perso/media/validate')
 async def validate_media(meta: MediaMeta):
-    return await call('PUT',
-                      f'/file/api/v1/media/valicate',
-                      json=meta.model_dump(exclude_none=True)# None 배제
-                      )
+    return await call(
+        'POST',
+        '/file/api/v1/media/validate',
+        json=meta.model_dump(exclude_none=True)
+    )
 
 # 라우터: POST/ perso/upload - SAS 발급, Blob PUT, 미디어 등록을 일괄 처리
 @app.post('/perso/upload')
 async def upload_all_in_one(
-    file:UploadFile = File(...),
-    kind: str = Query('audio',pattern='^(audio|video)$'),
+    file: UploadFile = File(...),
+    kind: str = Query('audio', pattern='^(audio|video)$'),
     space_seq: int = Query(SPACE_SEQ, gt=0),
 ):
-    file_name = clean_name(file.filename) # 파일명
-    raw = await read_upload(file) # 파일데이터 binary
-    sas_url = await request_sas(file_name) # SAS 토큰이 포함된 URL
-    azure_status = await put_blob(sas_url, raw) # binary를 Azure에 등록하고 상태코드 획득
-    # Perso 에서 mediaSeq 획득
+    try:
+        file_name = clean_name(file.filename)
+        raw = await read_upload(file)
+    finally:
+        await file.close()
+
+    sas_url = await request_sas(file_name)
+    azure_status = await put_blob(sas_url, raw)
     media_seq = await register_media(space_seq, kind, sas_url, file_name)
+
     return {
         'mediaSeq': media_seq,
         'spaceSeq': space_seq,
