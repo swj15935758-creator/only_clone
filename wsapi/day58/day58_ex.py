@@ -12,7 +12,7 @@
 # 4. http://127.0.0.1:8000/docs 접속 → Try it out → Execute
 #
 # [공통 조회]
-# ① GET /health               : 로컬 서버와 API 키 설정 여부만 확인
+# ① GET /health              : 로컬 서버와 API 키 설정 여부만 확인
 # ② GET /perso/spaces        : 실제 Space 목록에서 spaceSeq 확인
 # ③ GET /perso/languages     : 지원 언어 및 supportedTtsModels 확인
 # ④ GET /perso/status        : 남은 크레딧 확인 (space_seq 선택 가능)
@@ -134,6 +134,7 @@ def parse_response(response: httpx.Response) -> dict:
 # Perso 서버에 XP-API-KEY 헤더를 붙여 실제 HTTP 요청 전송
 # method: GET/POST/PUT, path: BASE 뒤에 붙는 경로
 # params: 쿼리 파라미터, json: JSON 요청 본문
+# *: *뒤에 있는 매개 변수작성을 강제함
 async def call(method: str, path: str, *, params=None, json=None) -> dict:
     if not KEY:
         raise HTTPException(503, 'PERSO_API_KEY 환경 변수가 없습니다')
@@ -173,13 +174,14 @@ def job_ids(data: dict) -> dict:
 
 # 모든 생성 작업 공통 함수: 실제 비용 발생 요청은 confirm_cost가 true일 때만 수행
 # kind: stt, audio-separation, translate
-async def create_job(space_seq: int, kind: str, body: dict,
-                     confirm: bool) -> dict:
+async def create_job(space_seq: int, kind: str, body: dict,confirm: bool) -> dict:
     if not confirm:
         raise HTTPException(400, '생성에는 confirm_cost=true가 필요합니다')
-    result = await call('POST',
-                        f'{PREFIX}/projects/spaces/{space_seq}/{kind}',
-                        json=body)
+    result = await call(
+        'POST',
+        f'{PREFIX}/projects/spaces/{space_seq}/{kind}'
+        ,json=body
+    )
     return job_ids(result)
 
 
@@ -215,8 +217,7 @@ class TranslateJob(CreateJob):
     targetLanguages: list[TargetLanguage] = Field(min_length=1)
     numberOfSpeakers: int = Field(default=1, ge=1)
     withLipSync: bool = False
-    preferredSpeedType: str = Field(default='GREEN',
-                                    pattern='^(GREEN|RED)$')
+    preferredSpeedType: str = Field(default='GREEN',pattern='^(GREEN|RED)$')
 
 
 # Lip Sync 요청 모델: 속도와 새 프로젝트 제목
