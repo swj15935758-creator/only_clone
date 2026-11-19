@@ -98,7 +98,7 @@ MEDIA = 'https://portal-media.perso.ai'  # 결과 파일 서버
 PREFIX = '/video-translator/api/v1'
 KEY = os.getenv('PERSO_API_KEY', '').strip()
 SPACE_SEQ = 612722  # 기본 작업 공간: 실제 조회한 Space로 변경 가능
-MAX_UPLOAD = 25 * 1024 * 1024  # 교육용 업로드 제한: 25MB
+MAX_UPLOAD = 100 * 1024 * 1024  # 교육용 업로드 제한: 25MB
 app = FastAPI(title='Perso API 통합 실습', version='0.0.3')
 
 
